@@ -1,0 +1,36 @@
+﻿version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: powertab-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: powertab
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - powertab-network
+
+  backend:
+    build: .
+    container_name: powertab-backend
+    environment:
+      DATABASE_URL: root:root@tcp(mysql:3306)/powertab?charset=utf8mb4&parseTime=True&loc=Local
+      PORT: 8080
+      GIN_MODE: release
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - powertab-network
+
+volumes:
+  mysql-data:
+
+networks:
+  powertab-network:
+    driver: bridge

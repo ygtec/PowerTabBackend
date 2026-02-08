@@ -1,0 +1,14 @@
+﻿/bin
+/vendor
+/.env
+/.env.local
+/dist
+/.DS_Store
+*.log
+*.exe
+*.dll
+*.so
+*.dylib
+/.idea
+/.vscode
+/coverage.out
